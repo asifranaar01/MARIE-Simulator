@@ -1,0 +1,44 @@
+/Written by Asif 27158632
+/Task-2.2.1(2)
+//****Code for Putting Values into Stack and Popping Values from Steck*****//
+/Instruction to Push Values into stack 
+
+Push,     Input                   /Asking for user input
+          Skipcond 800            /Skipping the nest command it the input value is not greater than 0
+          Jump PopStack           /Jump to pop values from StackPointer
+          StoreI StackPointer     /Stores the value in AC indirectly to StackPointer
+          JnS Increment           /Using JnS to increment the value of the StackPointer
+          Jump Push               /Jumping to Push Subroutine
+
+PopStack, JnS Decrement       /Using JnS to infrement the value of the StackPointer
+          Jump Pop            /Jumping to Push Subroutine
+
+/Instruction to Pop Values into stack 
+      
+Pop,    LoadI StackPointer    /Loading the StackPointer indirectly
+        Skipcond 800          /Skipping the nest command it the input value is not greater than 0
+        Jump End              /Jumping to the End Instruction 
+        Output                /printing the output stored in AC
+        JnS Decrement         /Using JnS to decrement the value of the StackPointer
+        Jump Pop              /Jumping to the End Instruction
+    
+/Increment the value of the StackPointer
+  
+Increment, HEX 0
+           Load StackPointer   /Loading the StackPointer
+           Add One             /Adding One to the StackPointer
+           Store StackPointer  /Storing the value of the StackPointer
+           JumpI Increment     /Indirect jump to the Increment address
+
+/Increment the value of the StackPointer
+
+Decrement,   HEX 0
+             Load StackPointer  /Loading the StackPointer
+             Subt One           /Subtracting One from the StackPointer
+             Store StackPointer /Storing the value of the StackPointer
+             JumpI Decrement    /indirectly jumping to the Decrement address
+
+
+End,           Halt
+One,          DEC 1
+StackPointer, HEX A00

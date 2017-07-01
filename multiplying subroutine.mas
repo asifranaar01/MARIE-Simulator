@@ -1,0 +1,36 @@
+/Written by Asif 27158632
+/Task-2.1.1
+//***Code for Multiplication subroutine***//
+
+/Instruction to multiply two numbers
+      
+       Load Var1    /Loading the first Variable in AC
+       Store Count  /Storing the variable in Count which shows how many times the numbers need to be added
+Loop,  Load Count   /Loading the value of Count
+       Skipcond 800 /Skipping the next instruction if the value is less than 0
+       Jump End     /Jumpping to the End instruction 
+       JnS Multiply /Using JnS to jump to Multiply instruction 
+       Load Count   /Loaiing the value of count in AC
+       Subt One     /Subtracting One from the loaded value in AC
+       Store Count  /Storing the value of count    
+       Jump Loop    /Jumping to Loop instruction
+
+/Ending instruction
+End, Load Result    / Loading the value of result in AC
+     Output         /Outputting the value stored in AC
+     Halt           / Terminating the program
+
+/Instruction of adding variables multiple times
+Multiply,   HEX 0
+            Load Result      /Loading the value of result in AC
+            Add Var2         /Adding the Var2 onto AC
+            Store Result     /Storing the result
+            JumpI Multiply   /Indirectly jumping to multiply
+
+
+/Value of the Constants
+Var1, DEC 8
+Var2, DEC 12
+One, DEC 1
+Count, DEC 0
+Result, DEC 0

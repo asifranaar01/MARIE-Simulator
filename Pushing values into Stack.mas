@@ -1,0 +1,62 @@
+/Written by Asif 27158632
+/Task-2.2.1(1)
+/ Pushing values into Stack
+/ This Code is repeated "3" times to push three values into stack
+
+LoadI StackPointer            /Loading the value in the stackpointer by indirect addressing into AC
+Load Var1                     /Loading the first Value into AC
+AddI  StackPointer            /Adding the loaded value by indirect addressing
+StoreI StackPointer           /Storing the stored value by indirect addressing
+Load One                      /Loading constant value one in AC
+Add StackPointer              /Adding the value to the StackPointer
+Store StackPointer            /Storing the new value of the StackPointer
+
+LoadI StackPointer
+Add Var2
+AddI  StackPointer
+StoreI StackPointer
+Load One
+Add StackPointer
+Store StackPointer
+
+LoadI StackPointer
+Add Var3
+AddI  StackPointer
+StoreI StackPointer
+Load One
+Add StackPointer
+Store StackPointer
+
+/Popping Values from the stack
+/ This Code is repeated "3" times to pop three values into stack
+
+Load StackPointer      /Loading the value in the stackpointer by indirect addressing into AC
+Subt One               /Subtracting the constant value one to get the output from the stack
+Store StackPointer     /Storing the new value of the StackPointer
+LoadI StackPointer     /Loading the value in the stackpointer by indirect addressing
+Output                 /Outputting the first value from the stack
+Load StackPointer      /Loading the constant value of the stackpointer
+Subt One               /Subtracting one from the value of the stackpointer
+Store StackPointer     /Storing the new value of the Stackpointer
+
+LoadI StackPointer        
+Output
+Load StackPointer
+Subt One
+Store StackPointer
+
+LoadI StackPointer
+Output
+Load StackPointer
+Subt One
+Store StackPointer
+Halt
+
+One,          DEC 1     /Constant value one
+
+StackPointer, HEX A00    /StackPointer value
+
+/Some Decimal values which are pushed and popped in Stack
+Var1,         DEC 5   
+Var2,         DEC 4
+Var3,         DEC 3

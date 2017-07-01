@@ -1,0 +1,28 @@
+/Written by Asif 27158632
+/Task-2.1.2
+//****Corrected code for implementing division Subroutine
+
+Div1,      Load DivDvdnd      / Loading the given value of Dividend
+           Subt   DivDvsr     / Subtracting the value of divisor from Divivdend
+           Store DivDvdnd     / Storing the new subrtacted Divivdend
+         
+           Skipcond 800 / Skipping nest instruction when Divivdend is negative
+           Jump End     /Jump to end instruction 
+           JnS Div2     /using JnS to jump indirectly to Div2 and carry out the instruction then moving to the next address
+           Jump Div1    /Jumping to Div1
+
+End,       Load DivQt   /Loading value of Quotient
+           Output       /Outputting the value of Quotient
+           Halt         /Terminate instruction
+
+Div2,      HEX 0 
+           Load DivQt   /Loading the value of Quotient
+           Add One      /Adding one to the value of Quotient
+           Store DivQt  /Storing the new value of Quotient
+           JumpI Div2   /Indirectly jumping to the value stored in Div2
+
+
+DivQt, DEC 1      /Quotient pre defied as '1'
+DivDvsr, DEC 2    / Divisor
+DivDvdnd, DEC 16  / Dividend
+One, DEC 1        /Constant 1

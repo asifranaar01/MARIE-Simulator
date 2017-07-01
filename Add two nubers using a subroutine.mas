@@ -1,0 +1,54 @@
+/Written by Asif 27158632
+/Task-2.2.2
+//***Instruction to Add two nubers using a subroutine***//
+
+/Code to put numbers into stack
+Stack, Input                 /Asking for user input
+       Skipcond 800          /Skipping the nest command if the value stored in AC is greater than 0
+       Jump Pop              /Jumping to pop instruction
+       StoreI StackPointer   /Indirectly storing the stackpointer
+       JnS Increment         /Using JnS to jump to increment and then move on to the next address
+       Jump Stack            /Jumping to stack instruction
+
+/Code to pop numbers fron stack
+Pop,  JnS Decrement          /Using JnS to jump to decrement and then move on to the next address
+      LoadI StackPointer     /Indirectly loading to StackPointer
+      Store Val1             /Storing the value stored in AC to Val1
+      JnS Decrement          /Using JnS to jump to decrement and then move on to the next address
+      LoadI StackPointer     /Indirectly loading to StackPointer
+      Store Val2             /Storing the value stored in AC to Val2
+      Jump Addition          /Jumping to Addition instruction
+
+/Code to add numbers         
+Addition, Load Val1          /Loading the value for Val1 into AC
+          Add Val2           /Adding the value of Val2 to AC
+          Store Sum          /Storing the value in AC to sum
+          Load Sum           /Loading the value for sum into AC
+          Output             /Outputting the value stored in AC
+          Jump Push          /Jumping to push instruction
+/Code to push numbers     
+Push,  Load Sum              /Loading the value for Sum into AC 
+       StoreI StackPointer   /Indirectly storing the stackpointer
+       JnS Increment         /Using JnS to jump to increment and then move on to the next address
+       Jump Stack            /Jumping to stack instruction
+
+/Code to Increment the address
+Increment, HEX 0
+           Load StackPointer  /Loading the value of StackPointer into AC
+           Add One            /Adding the value of One onto AC
+           Store StackPointer /Storing tthe value of the StackPointer
+           JumpI Increment    /Indirectly jumping to the value stored in Increment 
+
+/Code to Decrement the address 
+Decrement, HEX 0
+           Load StackPointer   /Loading the value of StackPointer into AC
+           Subt One            /Subtracting one from the value of StackPointer
+           Store StackPointer  /Storing tthe value of the StackPointer
+           JumpI Decrement     /Indirectly jumping to the value stored in Decrement 
+
+
+StackPointer, HEX A00
+One, DEC 1
+Val1, DEC 0
+Val2, DEC 0
+Sum, DEC 0

@@ -1,0 +1,145 @@
+/******Written by Asif 27158632*******/
+/Task-2.2.3
+///*****Complete MARIE calculator*****///
+
+//Code for putting values in stack
+Stack, Input                    /Askinkg for user input
+       StoreI StackPointer      /Indirectly storing the stackpointer
+       Skipcond 800             /Skipping the next instruction if the value in AC is 0
+       Jump StoreCounter        /Jumping to StoreCounter
+       JnS Increment            /Jumps to Increment then carry on the code with next address
+       StoreI StoreCounter      /Indirectly store the StoreCounter
+       Jump Stack               /Jump to stack subroutine
+
+//Code for popping values stored in stack
+Pop,  LoadI StackPointer     /Indirectly store StoreCounter
+      Store Var1             /Store the value of AC to Var1
+      JnS Decrement          /Jumps to Increment then carry on the code with next address
+      LoadI StackPointer     /Indirectly store StoreCounter
+      Store Var2             /Store the value of AC to Var2
+      Jump Counter           /Jump to counter
+
+//Code for incrementing the value of the stackpointer 
+Increment, HEX 0
+           Load StackPointer   /Load the value of stackpointer on to AC
+           Add One             /Add one to stackpointer
+           Store StackPointer  /Storing stackpointer to AC
+           JumpI Increment     /Jumping indirectly to the value of AC
+
+//Code for decrementing the value of the stackpointer 
+Decrement, HEX 0
+           Load StackPointer    /Load the value of stackpointer on to AC
+           Subt One             /Subtacting One from the value of AC
+           Store StackPointer   /Storing stackpointer to AC
+           JumpI Decrement      /Indirectly jumping to the value of Decrement
+
+//Code for subtracting two values
+Subtraction, Load Var1        /Loading the value of Var1 in AC
+             Subt Var2        /Subtracting the value of Var2 from Var1
+             Store Result     /Storing the Result in to AC
+             Output           /Outputing the the value stored in AC 
+             Jump Push        /Jumping to Push
+
+//Code for adding two values
+Addition,  Load Var1      /Loading the value of Var1 in AC
+           Add Var2       /Adding the value of Var2 onto AC
+           Store Result   /Storing the result onto AC
+           Load Result    /Loading Result onto AC
+           Output         /Outputting the result
+           Jump Push      /Jumping to push
+
+//Code for pushing values stored in stack
+Push,  Load Result           /Loading Result onto AC
+       StoreI StackPointer   /Indirectly storing the StackPointer
+       JnS Increment         /Jumps to Increment then carry on the code with next address
+       Load Zero             /Loading the value of zero onto AC
+       Store Result          /Storing the result onto AC
+       Jump Stack            /Jumping to stack
+
+//Instruction to handle the counter value
+Counter, Load CVar1             /Loading the value of CVar1 onto AC
+         JnS IncrementOpperand  /Jumps to Increment then carry on the code with next address
+         Skipcond 000           /Skipping the next instruction if the value oon AC is less than 
+         Jump Addition          /Jumping to Addition subroutine
+         JnS IncrementOpperand  /Jumps to IncrementOpperand then carry on the code with next address
+         Load CVar1             /Loading the value of CVar1 onto AC
+         Skipcond 000           /Skipping the next instruction if the value oon AC is less than 0
+         Jump Subtraction       /Jumping to Addition subroutine
+         Load CVar1             /Loading the value of CVar1 onto AC
+         JnS IncrementOpperand  /Jumps to IncrementOpperand then carry on the code with next address
+         Load CVar1             /Loading the value of CVar1 onto AC
+         Skipcond 000           /Skipping the next instruction if the value oon AC is less than 0
+         Jump Multiplication    /Jumping to Multiplication
+         Jump Division          /Jumping to Division
+
+//Code for storing 
+StoreCounter, LoadI StackPointer /Indirectly loading the StackPointer
+              Store CVar1        /Storing the value of CVar1 into AC
+              JnS Decrement      /Jumps to Increment then carry on the code with next address
+              Jump Pop           /Jumping to pop
+
+Division, Load Var2         /Loading the value of Var2 into AC
+          Subt Var1         /Subtracting the value of AC from Var1
+          Store Var2        /Store the value of Var2 onto AC
+          Skipcond 800      /Skip the next command if the value of AC is greater than 0
+          Jump DivEnd       /Jump to DivEnd 
+          JnS Quotient      /Jumps to Quotient then carry on the code with next address
+          Jump Division     /Jumping to Division
+
+//Code for storing quotient in stack
+Quotient,  HEX 0
+           Load Result       /Loading the value of Result onto AC
+           Add One           /Adding One to the vale of AC
+           Store Result      /Storing Result to the value of AC
+           JumpI Quotient    /Jump indirectly to Quotient
+
+//Code for dividing values stored in stack
+DivEnd,  Load Result     /Loading Result to AC
+         Add One         /Adding the value of One to AC
+         Store Result    /Storing the value of result onto AC
+         Load Result     /Loading the result on to AC
+         Output          /Outputting the value stored in AC
+         Jump Push       /Jumping to the Push subroutine
+
+//Code for multiplying the values in stack
+Multiplication,   Load Count    /Loading the value of count onto AC
+                  Add Var1      /Adding the value of Var1 to AC
+                  Store Count   /Storing the value of Count to AC
+                  Jump MultLoop /Jumping to the subroutine MultLoop
+
+//Loop for multiplication
+MultLoop,  Load Count    /Loading the value of count onto AC
+           Skipcond 800  /Skipping the next instruction if the value oon AC is greater than 0
+           Jump End      /Jumping to the subroutine End
+           JnS Multiply  /Jumps to Multiply then carry on the code with next address
+           Load Count    /Loadiing the value of Count onto AC
+           Subt One      /Subtracting one from the value of count
+           Store Count   /Storing the value of count
+           Jump MultLoop /Jumping to MultLoop instruction
+       
+End, Load Result    /Loading the value of result onto AC
+     Output         /Outputting the value stored in AC
+     Jump Push      /Jumping to the push instruction
+
+Multiply,   HEX 0          
+            Load Result     /Loapding the value of result onto AC
+            Add Var2        /Adding the value of Var2 onto AC
+            Store Result    /Storing the result onto AC
+            JumpI Multiply  /Jumping indirectly to the Multiply instruction
+
+//Incrementing the the given for operation
+IncrementOpperand, Hex 0
+                   Load CVar1               /Loading the value of CVar1 onto AC
+                   Add One                  /Adding one to the value of AC
+                   Store CVar1              /Storing the value of CVar1
+                   JumpI IncrementOpperand  /Jumping indirectly to IncrementOpperand
+
+//Value for Constant
+StackPointer, HEX A00
+Count, DEC 0
+CVar1, DEC 0
+One, DEC 1
+Var1, DEC 0
+Var2, DEC 0
+Result, DEC 0
+Zero, DEC 0
